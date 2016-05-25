@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 23, 2016 at 05:01 PM
+-- Generation Time: May 25, 2016 at 02:54 PM
 -- Server version: 5.6.30-0ubuntu0.15.10.1
--- PHP Version: 5.6.11-1ubuntu3.3
+-- PHP Version: 5.6.11-1ubuntu3.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -61,26 +61,13 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_invitation`
+-- Table structure for table `user_invitation_trip`
 --
 
-CREATE TABLE IF NOT EXISTS `user_invitation` (
-  `user_invitation_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `user_invitation_trip` (
   `invitation_id` int(11) NOT NULL,
-  `user_acceptance` tinyint(4) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_trip_details`
---
-
-CREATE TABLE IF NOT EXISTS `user_trip_details` (
-  `user_trip_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `trip_id` int(11) NOT NULL
+  `trip_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -106,16 +93,13 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indexes for table `user_invitation`
+-- Indexes for table `user_invitation_trip`
 --
-ALTER TABLE `user_invitation`
-  ADD PRIMARY KEY (`user_invitation_id`);
-
---
--- Indexes for table `user_trip_details`
---
-ALTER TABLE `user_trip_details`
-  ADD PRIMARY KEY (`user_trip_id`);
+ALTER TABLE `user_invitation_trip`
+  ADD PRIMARY KEY (`invitation_id`,`trip_id`,`user_id`),
+  ADD KEY `invitation_id` (`invitation_id`,`trip_id`,`user_id`),
+  ADD KEY `trip_id` (`trip_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -137,15 +121,17 @@ ALTER TABLE `trip`
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `user_invitation`
+-- Constraints for dumped tables
 --
-ALTER TABLE `user_invitation`
-  MODIFY `user_invitation_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
--- AUTO_INCREMENT for table `user_trip_details`
+-- Constraints for table `user_invitation_trip`
 --
-ALTER TABLE `user_trip_details`
-  MODIFY `user_trip_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `user_invitation_trip`
+  ADD CONSTRAINT `user_invitation_trip_ibfk_1` FOREIGN KEY (`invitation_id`) REFERENCES `invitations` (`invitation_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_invitation_trip_ibfk_2` FOREIGN KEY (`trip_id`) REFERENCES `trip` (`trip_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_invitation_trip_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
