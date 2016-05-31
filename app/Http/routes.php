@@ -21,3 +21,6 @@ Route::auth();
 
 //Route::get('/home', 'HomeController@index');
 Route::get('/members', 'MemberController@index');
+Route::get('/User_invitation_trip', 'User_invitation_tripController@index');
+Route::get('/history', 'User_invitation_tripController@history');
+//Route::get('/show', 'User_invitation_tripController@history');
