@@ -17,10 +17,25 @@ Route::get('/', function () {
 Route::get('/register', function () {
     return view('auth/register');
 });
+Route::get('/create', function () {
+    return view('auth/create');
+});
+//Route::resource('/store', function () {
+//    return view('auth/store');
+//});
 Route::auth();
 
 //Route::get('/home', 'HomeController@index');
 Route::get('/members', 'MemberController@index');
+//Route::get('/create', 'UserController@create');
+//Route::resource('/store', 'UserController@store');
+//Route::resource('/test', 'TestController@method');
 Route::get('/User_invitation_trip', 'User_invitation_tripController@index');
 Route::get('/history', 'User_invitation_tripController@history');
 //Route::get('/show', 'User_invitation_tripController@history');
+
+//webservice
+Route::post('/members/updateStatus_ws', 'MemberController@updateStatus_ws');
+Route::post('/User_invitation_trip/show_ws', 'User_invitation_tripController@show_ws');
+Route::post('/User_invitation_trip/history_ws', 'User_invitation_tripController@history_ws');
+
