@@ -56,6 +56,7 @@ class MemberController extends Controller {
         } else {
             $output['message'] = ' not updated status';
         }
+        return $member;
     }
 
 }
