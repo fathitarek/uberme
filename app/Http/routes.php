@@ -40,3 +40,9 @@ Route::post('/User_invitation_trip/show_ws', 'User_invitation_tripController@sho
 Route::post('/User_invitation_trip/history_ws', 'User_invitation_tripController@history_ws');
 Route::post('/User_invitation_trip/create_ws', 'User_invitation_tripController@create_ws');
 
+
+Route::post('/members/create', 'MemberController@create');
+Route::post('/members/show', 'MemberController@show');
+Route::post('/members/update', 'MemberController@update');
+
+
