@@ -36,7 +36,8 @@ SELECT trip.pickup_location ,trip.destnation_location ,trip.trip_time , members.
         } else {
             $output['message'] = 'Not_show_ws';
         }
-        return $user_invitation_trip;
+        //return $user_invitation_trip;
+        return response()->json($user_invitation_trip);
     }
 
     public function history_ws(Request $request) {
@@ -50,7 +51,8 @@ SELECT trip.pickup_location ,trip.destnation_location ,trip.trip_time , members.
         } else {
             $output['message'] = 'Not_history_ws';
         }
-        return $user_invitation_trip;
+        //return $user_invitation_trip;
+        return response()->json($user_invitation_trip);
     }
 
     public function create_ws(Request $request) {
