@@ -8,6 +8,7 @@ use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
+
 class MemberController extends Controller {
 
     public function index() {
@@ -40,20 +41,28 @@ class MemberController extends Controller {
     public function update(Request $request)
     {
 
-        $id = $request['user_id'];
-        $name = $request['name'];
-        $phone_number = $request['phone_number'];
-        $email= $request['email'];
+        $id = $request->user_id;
+        $name = $request->name;
+        $phone_number = $request->phone_number;
+        $email= $request->email;
 
      //   $status = $request['status'];
-        unset($request['user_id']);
+        //unset($request['user_id']);
         $output = array();
         //UPDATE `members` set `status`=0 WHERE user_id=1 
-       // $member = DB::table('members')
-         //       ->where('user_id', 6)
+       /* $member = DB::table('members')
+                ->where('user_id', $id)
            //     ->update($request->all());
-                //->update($request->all());
-$member=DB::statement("UPDATE members SET name ='".$name."' ,phone_number = ".$phone_number.",email ='".$email ."' where user_id=".$id); 
+                ->update($request->all());*/
+                $member= Members::find($id);
+                $member->phone_number = $request->phone_number;
+                $member->email=$request->email;
+                $member->save();
+
+                
+                //return response()->json($member);
+
+//$member=DB::statement("UPDATE members SET name ='".$name."' ,phone_number = ".$phone_number.",email ='".$email ."' where user_id=".$id); 
 
         if($member) {
             $output['message'] = 'updated-status';
@@ -61,7 +70,7 @@ $member=DB::statement("UPDATE members SET name ='".$name."' ,phone_number = ".$p
         } else {
             $output['message'] = ' not updated status';
         }
-        return $member;
+        return response()->json($output);       
     }
 
    

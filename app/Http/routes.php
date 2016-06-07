@@ -46,3 +46,5 @@ Route::post('/members/show', 'MemberController@show');
 Route::post('/members/update', 'MemberController@update');
 
 
+Route::post('/trips/{ area }', 'TripController@trip_day');
+//Route::get('/trips/month', 'TripController@trip_month');
