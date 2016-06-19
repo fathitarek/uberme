@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use Auth;
+
 use App\Members;
 use Validator;
 use DB;
@@ -12,20 +12,17 @@ use App\Http\Requests;
 class MemberController extends Controller {
 
     public function index() {
-        if (Auth::check()) {
         $members = DB::table('members')->get();
 
         return view('member.show', ['members' => $members]);
     }
-    else{ return view('auth/login');}
-}
 
      public function create(Request $request) {
         $output=array();
         $member = new Members;
 
         $member->name = $request->name;
-       // $member->phone_number = $request->phone_number;
+        $member->phone_number = $request->phone_number;
         $member->email = $request->email;
 
       if ($member->save()) {
@@ -44,9 +41,9 @@ class MemberController extends Controller {
     public function update(Request $request)
     {
 
-        $id = $request->uuid;
+        $id = $request->user_id;
         $name = $request->name;
-       // $phone_number = $request->phone_number;
+        $phone_number = $request->phone_number;
         $email= $request->email;
 
      //   $status = $request['status'];
@@ -58,7 +55,7 @@ class MemberController extends Controller {
            //     ->update($request->all());
                 ->update($request->all());*/
                 $member= Members::find($id);
-                //$member->phone_number = $request->phone_number;
+                $member->phone_number = $request->phone_number;
                 $member->email=$request->email;
                 $member->save();
 
@@ -85,7 +82,7 @@ class MemberController extends Controller {
 
         $output=array();
 //$member = new Members;
-        $member=DB::select('SELECT * FROM members WHERE uuid=' . "'$id'");
+        $member=DB::select('SELECT * FROM members WHERE user_id=' . $id);
 
         //$member= DB::table('members')
         //    ->where('user_id', $id);
@@ -108,8 +105,8 @@ class MemberController extends Controller {
         $validator = Validator::make($request->all(), [
 
                     'name' => 'required|max:20|min:3',
-                   
-                    'email' => 'email|required',
+                    'phone_number' => 'required|integer|min:9',
+                    'email' => 'email|required'
         ]);
         if ($validator->fails()) {
             return redirect('create')
@@ -117,7 +114,7 @@ class MemberController extends Controller {
         } else {
             $member = new Members();
             $member->name = $request['name'];
-           // $member->phone_number = $request['phone_number'];
+            $member->phone_number = $request['phone_number'];
             $member->email = $request['email'];
             $member->save();
             return redirect()->route('members');
@@ -125,13 +122,13 @@ class MemberController extends Controller {
     }
 
     public function updateStatus_ws(Request $request) {
-        $id = $request['uuid'];
+        $id = $request['user_id'];
         $status = $request['status'];
-        unset($request['uuid']);
+        unset($request['user_id']);
         $output = array();
         //UPDATE `members` set `status`=0 WHERE user_id=1 
         $member = DB::table('members')
-                ->where('uuid', $id)
+                ->where('user_id', $id)
                 ->update(['status' => $status]);
                 //->update($request->all());
         if ($member==1) {

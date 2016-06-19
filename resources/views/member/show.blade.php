@@ -8,14 +8,14 @@
 
                 <div class="panel-body">
                      <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Mobile Phone</th>
+                          
                             <th>E-mail</th>
                             <th>Status</th>
                         </tr>
@@ -28,7 +28,7 @@
                             echo'  <tr class="active">';
                             //  echo "<td>" . $member->user_id."<td/>";
                             echo "<td>" . $member->name . "</td>";
-                            echo"<td>" . $member->phone_number . "</td>";
+                            
                             echo "<td>" . $member->email . "</td>";
                             if ($member->status == 1) {
                                 //  echo "statusis ->open notification: == " . $member->status."<br/>";

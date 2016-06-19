@@ -35,7 +35,7 @@ Route::get('/history', 'User_invitation_tripController@history');
 //Route::get('/show', 'User_invitation_tripController@history');
 
 //webservice
-Route::post('/members/updateStatus_ws', 'MemberController@updateStatus_ws');
+Route::resource('/members/updateStatus_ws', 'MemberController@updateStatus_ws');
 Route::post('/User_invitation_trip/show_ws', 'User_invitation_tripController@show_ws');
 Route::post('/User_invitation_trip/history_ws', 'User_invitation_tripController@history_ws');
 Route::post('/User_invitation_trip/create_ws', 'User_invitation_tripController@create_ws');
